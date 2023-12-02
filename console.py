@@ -125,28 +125,35 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        class_name = my_list.pop(0)  # remove class name from list
         # create new instance of class matching arg 0 of list
-        new_instance = HBNBCommand.classes[my_list[0]]()
+        new_instance = HBNBCommand.classes[class_name]()
         print(new_instance.id)
+        print(my_list)
 
         # parse args for key, value pairs
         for params in my_list[1:]:
-            key_value = params.split('=')
-            key = key_value[0]
-            value = key_value[1]
+            if '=' not in params:
+                continue
+            
+            key, value = params.split('=', 1)
 
-            if value[0] == '\"' and value[-1] == '\"':
-                value = value[1:-1]
-                value = value.replace('_', ' ')
-            elif '.' in value:
-                value = float(value)
-            elif value.isdigit():
-                value = int(value)
+            if value.startswith('"') and value.endswith('"'):
+                strp_value = value.strip('"').replace('\\"', '"')\
+                    .replace('_', ' ')
+                setattr(new_instance, key, strp_value)
             else:
-                value = str(value)
-
-            setattr(new_instance, key, value)
+                try:
+                    if '.' in value:
+                        value = float(value)
+                    else:
+                        value = int(value)
+                except ValueError:
+                        continue
+                    
         new_instance.save()  # Save to storage
+        storage.save()
+        storage.reload()
 
     def help_create(self):
         """ Help information for the create method """
