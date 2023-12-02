@@ -47,6 +47,13 @@ class TestConsole(unittest.TestCase):
             created_id = output.split()[-1]  # Extract the ID from the output
             self.assertEqual(created_id, output)
 
+    def test_do_create_state_empty(self):
+        """Test create state empty"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.cmd.onecmd("create State")
+            output = f.getvalue().strip()
+
+
 
     def test_emptyline(self):
         """Test empty line"""
