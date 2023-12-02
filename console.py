@@ -147,6 +147,7 @@ class HBNBCommand(cmd.Cmd):
 
             setattr(new_instance, key, value)
         new_instance.save()  # Save to storage
+        storage.reload()  # Reload storage
 
     def help_create(self):
         """ Help information for the create method """
@@ -176,6 +177,11 @@ class HBNBCommand(cmd.Cmd):
             return
 
         key = c_name + "." + c_id
+        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+            try:
+                print(storage.all()[key])
+            except KeyError:
+                print("** no instance found **")
         try:
             print(storage._FileStorage__objects[key])
         except KeyError:
