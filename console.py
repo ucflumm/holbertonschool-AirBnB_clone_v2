@@ -115,44 +115,40 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-
-        # arg checking
-        my_list = args.split(' ')
+        args = args.split(' ')
         if not args:
             print("** class name missing **")
             return
-        elif my_list[0] not in HBNBCommand.classes:
+        if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        # create new instance of class matching arg 0 of list
-        new_instance = HBNBCommand.classes[mylist[0]]()
-        print(new_instance.id)
-        print(my_list)
+        new_instance = HBNBCommand.classes[args[0]]()
 
-        # parse args for key, value pairs
-        for params in my_list[1:]:
-            if '=' not in params:
+        for param in args[1:]:
+            if "=" not in param:
                 continue
-            
-            key, value = params.split('=', 1)
+
+            key, value = param.split('=', 1)
 
             if value.startswith('"') and value.endswith('"'):
-                strp_value = value.strip('"').replace('\\"', '"')\
+                stripped_value = value.strip('"').replace('\\"', '"')\
                     .replace('_', ' ')
-                setattr(new_instance, key, strp_value)
+                setattr(new_instance, key, stripped_value)
+
             else:
                 try:
                     if '.' in value:
-                        value = float(value)
+                        new_value = float(value)
                     else:
-                        value = int(value)
+                        new_value = int(value)
+                    setattr(new_instance, key, new_value)
                 except ValueError:
-                        continue
-                    
-        new_instance.save()  # Save to storage
+                    continue
+
+        new_instance.save()
+        print(new_instance.id)
         storage.save()
-        storage.reload()
 
     def help_create(self):
         """ Help information for the create method """
