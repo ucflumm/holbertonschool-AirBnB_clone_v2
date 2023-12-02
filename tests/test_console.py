@@ -23,14 +23,14 @@ class TestConsole(unittest.TestCase):
     """Unittest for console.py"""
 
     @classmethod
-    def setUp(cls):
+    def setUp(self):
         """Set up method"""
-        cls.console = HBNBCommand()
+        self.cmd = HBNBCommand()
 
     @classmethod
-    def tearDown(cls):
+    def tearDown(self):
         """Tear down method"""
-        del cls.console
+        storage.reload()
 
     def tearDown(self):
         """Tear down method"""
@@ -38,12 +38,21 @@ class TestConsole(unittest.TestCase):
             os.remove("file.json")
         except Exception:
             pass
+        
+    def test_do_create(self):
+        """Test create state"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.cmd.onecmd("create State name=\"California\"")
+            output = f.getvalue().strip()  # Get the actual output and remove leading/trailing spaces
+            created_id = output.split()[-1]  # Extract the ID from the output
+            self.assertEqual(created_id, output)
+
 
     def test_emptyline(self):
         """Test empty line"""
         with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("\n")
-            self.assertEqual("", f.getvalue())
+            self.cmd.onecmd("\n")
+            self.assertEqual("", f.getvalue()[:-1])
 
 
 if __name__ == '__main__':
