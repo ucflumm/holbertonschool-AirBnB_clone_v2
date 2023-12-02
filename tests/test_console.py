@@ -61,6 +61,14 @@ class TestConsole(unittest.TestCase):
             created_id = output.split()[-1]
             self.assertEqual(created_id, output)
 
+    def test_create_base_model(self):
+        """Test create base model"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.cmd.onecmd("create BaseModel")
+            output = f.getvalue().strip()
+            created_id = output.split()[-1]
+            self.assertEqual(created_id, output)
+
 
 
     def test_emptyline(self):
