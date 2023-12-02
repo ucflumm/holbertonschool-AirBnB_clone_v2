@@ -38,13 +38,13 @@ class TestConsole(unittest.TestCase):
             os.remove("file.json")
         except Exception:
             pass
-        
+
     def test_do_create(self):
         """Test create state"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.cmd.onecmd("create State name=\"California\"")
-            output = f.getvalue().strip()  # Get the actual output and remove leading/trailing spaces
-            created_id = output.split()[-1]  # Extract the ID from the output
+            output = f.getvalue().strip()
+            created_id = output.split()[-1]
             self.assertEqual(created_id, output)
 
     def test_do_create_state_empty(self):
@@ -61,6 +61,14 @@ class TestConsole(unittest.TestCase):
             created_id = output.split()[-1]
             self.assertEqual(created_id, output)
 
+    def test_create_state_normal(self):
+        """Test create state normal"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.cmd.onecmd("create State name=\"New South Wales\"")
+            self.cmd.onecmd("all State")
+            output = f.getvalue().strip()
+            self.assertIn("New South Wales", output)
+
     def test_create_base_model(self):
         """Test create base model"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -68,8 +76,6 @@ class TestConsole(unittest.TestCase):
             output = f.getvalue().strip()
             created_id = output.split()[-1]
             self.assertEqual(created_id, output)
-
-
 
     def test_emptyline(self):
         """Test empty line"""
