@@ -53,6 +53,14 @@ class TestConsole(unittest.TestCase):
             self.cmd.onecmd("create State")
             output = f.getvalue().strip()
 
+    def test_create_state(self):
+        """Test create state"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.cmd.onecmd("create State name=\"San Jose\"")
+            output = f.getvalue().strip()
+            created_id = output.split()[-1]
+            self.assertEqual(created_id, output)
+
 
 
     def test_emptyline(self):
