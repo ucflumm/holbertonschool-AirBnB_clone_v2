@@ -147,7 +147,6 @@ class HBNBCommand(cmd.Cmd):
 
             setattr(new_instance, key, value)
         new_instance.save()  # Save to storage
-        storage.reload()  # Reload storage
 
     def help_create(self):
         """ Help information for the create method """
@@ -176,6 +175,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
+        key = c_name + "." + c_id
         try:
             print(storage.all[HBNBCommand.classes[c_name] + "." + c_id])
         except KeyError:
