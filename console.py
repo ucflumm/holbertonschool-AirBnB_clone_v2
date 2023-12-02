@@ -176,14 +176,8 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        key = c_name + "." + c_id
-        if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-            try:
-                print(storage.all()[key])
-            except KeyError:
-                print("** no instance found **")
         try:
-            print(storage._FileStorage__objects[key])
+            print(storage.all[key])
         except KeyError:
             print("** no instance found **")
 
