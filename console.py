@@ -125,9 +125,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        class_name = my_list.pop(0)  # remove class name from list
         # create new instance of class matching arg 0 of list
-        new_instance = HBNBCommand.classes[class_name]()
+        new_instance = HBNBCommand.classes[mylist[0]]()
         print(new_instance.id)
         print(my_list)
 
