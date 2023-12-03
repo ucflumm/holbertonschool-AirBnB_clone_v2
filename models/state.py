@@ -18,7 +18,6 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            """ Return the list of City instances where state_id equals State.id """
             from models.city import City
             city_list = [city for city in storage.all(
                 City).values() if city.state_id == self.id]
