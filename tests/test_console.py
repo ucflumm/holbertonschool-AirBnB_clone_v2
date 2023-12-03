@@ -65,9 +65,19 @@ class TestConsole(unittest.TestCase):
         """Test create state normal"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.cmd.onecmd("create State name=\"New South Wales\"")
+            state_id = f.getvalue().strip()
+            self.assertNotEqual(
+                state_id, "", "State creation failed or no ID returned")
+
+            self.cmd.onecmd(f"show State {state_id}")
+            state_details = f.getvalue().strip()
+            self.assertIn("New South Wales", state_details,
+                          "State name not in 'show' output")
+
             self.cmd.onecmd("all State")
-            output = f.getvalue().strip()
-            self.assertIn("New South Wales", output)
+            all_states_output = f.getvalue().strip()
+            self.assertIn("New South Wales", all_states_output,
+                          "'New South Wales' not found in 'all State' output")
 
     def test_create_base_model(self):
         """Test create base model"""
