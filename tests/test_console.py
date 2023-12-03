@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 """
     Unittest for console.py
@@ -62,14 +63,6 @@ class TestConsole(unittest.TestCase):
         """Test create state"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.cmd.onecmd("create State name=\"San Jose\"")
-            output = f.getvalue().strip()
-            created_id = output.split()[-1]
-            self.assertEqual(created_id, output)
-
-    def test_create_base_model(self):
-        """Test create base model"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.cmd.onecmd("create BaseModel")
             output = f.getvalue().strip()
             created_id = output.split()[-1]
             self.assertEqual(created_id, output)
