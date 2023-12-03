@@ -2,6 +2,7 @@
 """
     Amenity Module for HBNB project
 """
+import os
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Table
 from sqlalchemy.orm import relationship
