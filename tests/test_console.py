@@ -8,7 +8,6 @@ from models import storage
 from unittest.mock import patch
 from io import StringIO
 import os
-import sys
 from models.base_model import BaseModel
 from models.engine.db_storage import DBStorage
 from models.state import State
@@ -23,21 +22,27 @@ class TestConsole(unittest.TestCase):
     """Unittest for console.py"""
 
     @classmethod
-    def setUp(self):
-        """Set up method"""
-        self.cmd = HBNBCommand()
+    def setUpClass(cls):
+        """Set up class method"""
+        os.environ['HBNB_TYPE_STORAGE'] = 'db'
 
     @classmethod
-    def tearDown(self):
-        """Tear down method"""
-        storage.reload()
+    def tearDownClass(cls):
+        """Tear down class method"""
+        if 'HBNB_TYPE_STORAGE' in os.environ:
+            del os.environ['HBNB_TYPE_STORAGE']
+
+    def setUp(self):
+        """Set up test environment"""
+        self.cmd = HBNBCommand()
 
     def tearDown(self):
-        """Tear down method"""
+        """Tear down test environment"""
         try:
             os.remove("file.json")
         except Exception:
             pass
+        storage.reload()
 
     def test_do_create(self):
         """Test create state"""

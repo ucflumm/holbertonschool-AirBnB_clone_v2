@@ -26,6 +26,3 @@ class State(BaseModel, Base):
             return cities_list
 
         cities = relationship('City', backref='state', cascade='all, delete')
-
-    else:
-        name = ""
