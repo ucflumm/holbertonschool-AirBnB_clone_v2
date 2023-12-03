@@ -123,6 +123,11 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
+        # Prevent instantiation of BaseModel
+        if args[0] == 'BaseModel':
+            print("Error: 'BaseModel' cannot be instantiated.")
+            return
+
         new_instance = HBNBCommand.classes[args[0]]()
 
         for param in args[1:]:
@@ -132,8 +137,8 @@ class HBNBCommand(cmd.Cmd):
             key, value = param.split('=', 1)
 
             if value.startswith('"') and value.endswith('"'):
-                stripped_value = value.strip('"').replace('\\"', '"')\
-                    .replace('_', ' ')
+                stripped_value = value.strip('"').replace(
+                    '\\"', '"').replace('_', ' ')
                 setattr(new_instance, key, stripped_value)
 
             else:
@@ -148,7 +153,6 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
