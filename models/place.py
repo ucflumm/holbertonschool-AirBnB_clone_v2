@@ -5,10 +5,10 @@
     *Update 1/12/2023: added code to use FileStorage and associated imports
         part of question 10
 """
+import os
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-import os
 
 metadata = Base.metadata
 
