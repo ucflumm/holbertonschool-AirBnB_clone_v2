@@ -10,10 +10,10 @@ from sqlalchemy.orm import relationship
 
 class Amenity(BaseModel, Base):
     __tablename__ = 'amenities'
-    name = Column(String(128), nullable=False)
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
 
+        name = Column(String(128), nullable=False)
         place_amenities = Table(
             'place_amenity', Base.metadata,
             Column('place_id', String(60), ForeignKey(
@@ -24,3 +24,5 @@ class Amenity(BaseModel, Base):
 
         places = relationship(
             'Place', secondary=place_amenities, back_populates='amenities')
+    else:
+        name = ""

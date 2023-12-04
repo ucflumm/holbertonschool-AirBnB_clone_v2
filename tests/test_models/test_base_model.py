@@ -7,6 +7,8 @@ from uuid import UUID
 import json
 import os
 
+storage_engine = os.getenv('HBNB_TYPE_STORAGE')
+
 
 class test_basemodel(unittest.TestCase):
     """ """
@@ -15,7 +17,7 @@ class test_basemodel(unittest.TestCase):
         """ """
         super().__init__(*args, **kwargs)
         self.name = 'BaseModel'
-        self.value = User
+        self.value = BaseModel
 
     def setUp(self):
         """ """
@@ -29,27 +31,28 @@ class test_basemodel(unittest.TestCase):
 
     def test_default(self):
         """ """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         self.assertEqual(type(i), self.value)
 
     def test_kwargs(self):
         """ """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         copy = i.to_dict()
-        new = User(**copy)
+        new = BaseModel(**copy)
         self.assertFalse(new is i)
 
     def test_kwargs_int(self):
         """ """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         copy = i.to_dict()
         copy.update({1: 2})
         with self.assertRaises(TypeError):
-            new = User(**copy)
+            new = BaseModel(**copy)
 
+    @unittest.skipIf(storage_engine == "db", "not using FileStorage")
     def test_save(self):
         """ Testing save """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         i.save()
         key = self.name + "." + i.id
         with open('file.json', 'r') as f:
@@ -58,13 +61,13 @@ class test_basemodel(unittest.TestCase):
 
     def test_str(self):
         """ """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
 
     def test_todict(self):
         """ """
-        i = self.value()  # replaced BaseModel with User
+        i = self.value()
         n = i.to_dict()
         self.assertEqual(i.to_dict(), n)
 
@@ -95,5 +98,5 @@ class test_basemodel(unittest.TestCase):
     #     new = self.value()
     #     self.assertEqual(type(new.updated_at), datetime.datetime)
     #     n = new.to_dict()
-    #     new = User(**n)
+    #     new = BaseModel(**n)
     #     self.assertFalse(new.created_at == new.updated_at)
