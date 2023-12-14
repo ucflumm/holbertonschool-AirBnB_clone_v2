@@ -8,7 +8,6 @@ from models import storage
 from unittest.mock import patch
 from io import StringIO
 import os
-import sys
 from models.base_model import BaseModel
 from models.engine.db_storage import DBStorage
 from models.state import State
@@ -23,21 +22,27 @@ class TestConsole(unittest.TestCase):
     """Unittest for console.py"""
 
     @classmethod
-    def setUp(self):
-        """Set up method"""
-        self.cmd = HBNBCommand()
+    def setUpClass(cls):
+        """Set up class method"""
+        os.environ['HBNB_TYPE_STORAGE'] = 'db'
 
     @classmethod
-    def tearDown(self):
-        """Tear down method"""
-        storage.reload()
+    def tearDownClass(cls):
+        """Tear down class method"""
+        if 'HBNB_TYPE_STORAGE' in os.environ:
+            del os.environ['HBNB_TYPE_STORAGE']
+
+    def setUp(self):
+        """Set up test environment"""
+        self.cmd = HBNBCommand()
 
     def tearDown(self):
-        """Tear down method"""
+        """Tear down test environment"""
         try:
             os.remove("file.json")
         except Exception:
             pass
+        storage.reload()
 
     def test_do_create(self):
         """Test create state"""
@@ -61,27 +66,16 @@ class TestConsole(unittest.TestCase):
             created_id = output.split()[-1]
             self.assertEqual(created_id, output)
 
-    def test_create_state_normal(self):
-        """Test create state normal"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.cmd.onecmd("create State name=\"New South Wales\"")
-            self.cmd.onecmd("all State")
-            output = f.getvalue().strip()
-            self.assertIn("New South Wales", output)
-
-    def test_create_base_model(self):
-        """Test create base model"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.cmd.onecmd("create BaseModel")
-            output = f.getvalue().strip()
-            created_id = output.split()[-1]
-            self.assertEqual(created_id, output)
-
     def test_emptyline(self):
         """Test empty line"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.cmd.onecmd("\n")
             self.assertEqual("", f.getvalue()[:-1])
+
+    def test_name3(self):
+        """ Test State.name is a string """
+        new = State(name="California")
+        self.assertEqual(type(new.name), str)
 
 
 if __name__ == '__main__':

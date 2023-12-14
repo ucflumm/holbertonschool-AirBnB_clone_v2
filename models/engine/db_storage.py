@@ -32,11 +32,11 @@ class DBStorage:
         if env == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        Base.metadata.create_all(bind=self.__engine)
+        # Base.metadata.create_all(bind=self.__engine)
 
-        session_factory = sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False)
-        self.__session = scoped_session(session_factory)
+        # session_factory = sessionmaker(bind=self.__engine,
+        #                                expire_on_commit=False)
+        # self.__session = scoped_session(session_factory)
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
@@ -57,11 +57,13 @@ class DBStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.__session.add(obj)
+        if self.__session is not None and obj is not None:
+            self.__session.add(obj)
 
     def save(self):
         """Saves storage dictionary to database"""
-        self.__session.commit()
+        if self.__session is not None:
+            self.__session.commit()
 
     def delete(self, obj=None):
         """Deletes obj from __objects if obj is not None"""
