@@ -30,15 +30,15 @@ def teardown_db(exc):
 @app.route("/states", strict_slashes=False)
 def states():
     """display a HTML page"""
-    states = storage.all("State")
-    return render_template("9-states.html", state=states)
+    all_states = storage.all("State")
+    return render_template("9-states.html", state=all_states)
 
 
 @app.route("/states/<id>", strict_slashes=False)
 def states_id(id):
     """display a HTML page"""
     state = storage.all("State")
-    for state in states.values():
+    for state in storage.all("State").values():
         if state.id == id:
             return render_template("9-states.html", state=state)
     return render_template("9-states.html")
