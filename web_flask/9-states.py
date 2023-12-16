@@ -31,7 +31,7 @@ def teardown_db(exc):
 def states():
     """display a HTML page"""
     states = storage.all("State")
-    return render_template("9-states.html", states=states)
+    return render_template("9-states.html", state=states)
 
 
 @app.route("/states/<id>", strict_slashes=False)
