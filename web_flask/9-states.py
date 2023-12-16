@@ -5,13 +5,13 @@
         /states: display a HTML page: (inside the tag BODY)
             H1 tag: “States”
             UL tag: with the list of all State objects present in DBStorage
-                LI tag: description of one State: <state.id>: <B><state.name></B>
+                LI tag: description of one State: <state.id>: <B><state.name>
         /states/<id>: display a HTML page: (inside the tag BODY)
             If a State object is found with this id:
                 H1 tag: “State: ”
                 H3 tag: “Cities:”
                 UL tag: with the list of City objects linked to the State
-                    LI tag: description of one City: <city.id>: <B><city.name></B>
+                    LI tag: description of one City: <city.id>: <B><city.name>
             Otherwise:
                 H1 tag: “Not found!”
 """
