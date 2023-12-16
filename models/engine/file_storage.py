@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+"""This module defines a class that manage file storage for hbnb clone"""
 import json
 
 
@@ -12,11 +12,11 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         if cls is None:
             return FileStorage.__objects
-        filter = {}
-        for key, value in FileStorage.__objects.items():
-            if isinstance(value, cls):
-                filter[key] = value
-        return filter
+        dict = {}
+        for k, v in FileStorage.__objects.items():
+            if isinstance(v, cls):
+                dict[k] = v
+        return dict
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -56,22 +56,11 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """
-        Deletes obj from __objects if inside.
-
-        Args:
-        obj (object): The object to be deleted.
-        """
-        if obj is None:
-            return
-        if obj:
-            # Create a key combining the object's class name and its id
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-
-            # Check if the key exists in the __objects dictionary and delete it
-        if key in FileStorage.__objects:
-            del FileStorage.__objects[key]
+        """Deletes obj from __objects if obj is not None"""
+        if obj is not None:
+            key = obj.to_dict()['__class__'] + '.' + obj.id
+            FileStorage.__objects.pop(key, None)
 
     def close(self):
-        """ Deserialise the JSON file to objects"""
+        """Deserializing the JSON file to objects"""
         self.reload()
