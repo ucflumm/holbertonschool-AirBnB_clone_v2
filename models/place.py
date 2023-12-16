@@ -8,6 +8,7 @@
 import os
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy import MetaData
 from sqlalchemy.orm import relationship
 
 metadata = MetaData()
