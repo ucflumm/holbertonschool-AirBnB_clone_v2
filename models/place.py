@@ -10,7 +10,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
-metadata = Base.metadata
+metadata = MetaData()
 
 
 class Place(BaseModel, Base):
@@ -34,7 +34,8 @@ class Place(BaseModel, Base):
                                cascade="delete, delete-orphan")
         cities = relationship('City', back_populates='places')
         amenities = relationship('Amenity', secondary='place_amenity',
-                                 viewonly=False)
+                                 viewonly=False, overlaps='place_amenities')
+        user = relationship('User', back_populates='places')
     else:
         city_id = ""
         user_id = ""
