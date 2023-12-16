@@ -1,5 +1,11 @@
 #!/usr/bin/python3
-""" Place Module for HBNB project """
+"""
+    This module defines the Place class
+    *Update 30/11/2023: added code to use db storage and associated imports
+    *Update 1/12/2023: added code to use FileStorage and associated imports
+        part of question 10
+    *Update 2/12/2023: added code to use Amenity class and associated imports
+"""
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, null
 from sqlalchemy import Table, MetaData
@@ -59,8 +65,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """
-            Getter attribute to return a list of Review instances with place_id
-            equals to the current Place.id
+                returns list of Review instances base on atrribute place_id
             """
             from models import storage
             review_dict = storage.all(Review)
@@ -73,8 +78,8 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """
-            returns list of Amenity instances base on atrribute amenity_ids
-            that contains all Amenity.id linked to Place
+                returns list of Amenity instances base on atrribute amenity_ids
+                that contains all Amenity.id linked to Place
             """
             from models import storage
             amenity_values = storage.all(Amenity).values()
@@ -87,7 +92,7 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, value):
             """
-            handles append for adding Amenity.id to attribute amenity_ids
+                amenities setter
             """
             if type(value) is Amenity:
                 self.amenity_ids.append(value.id)
