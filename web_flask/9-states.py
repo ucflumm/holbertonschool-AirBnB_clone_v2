@@ -37,11 +37,11 @@ def states():
 @app.route("/states/<id>", strict_slashes=False)
 def states_id(id):
     """display a HTML page"""
-    states = storage.all("State")
+    state = storage.all("State")
     for state in states.values():
         if state.id == id:
             return render_template("9-states.html", state=state)
-    return render_template("9-states.html", state=None)
+    return render_template("9-states.html")
 
 
 if __name__ == '__main__':
