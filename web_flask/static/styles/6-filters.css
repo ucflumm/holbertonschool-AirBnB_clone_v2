@@ -18,7 +18,11 @@
 	border-right: 1px solid #DDDDDD;
 }
 
+<<<<<<< HEAD
 .amenities {
+=======
+.filter_amenities {
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 	display: inline;
 	vertical-align: middle;
 	height: 100%;
@@ -33,8 +37,14 @@
 	display: none;
 	background-color: #FAFAFA;
 	width: 100%;
+<<<<<<< HEAD
 	max-height: 300px;
 	overflow-y: auto;
+=======
+	overflow-y: scroll;
+	max-height: 300px;
+
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 	margin-left: -1px;
 	margin-top: 8px;
 	padding: 25px 0px;
@@ -47,7 +57,11 @@
 	display: inline-block;
 }
 
+<<<<<<< HEAD
 .amenities:hover .popover {
+=======
+.filter_amenities:hover .popover {
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 	display: inline-block;
 }
 
@@ -58,7 +72,11 @@ ul {
 }
 
 li {
+<<<<<<< HEAD
 }
+=======
+}	
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 
 h2 {
 	font-size: 16px;
@@ -69,7 +87,11 @@ h2 {
 h3 {
 	font-weight: 600;
 	margin-top: 12px;
+<<<<<<< HEAD
 	margin-bottom: 5px;
+=======
+	margin-bottom: 5px;	
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 	padding-left: 45px;
 }
 
@@ -84,7 +106,11 @@ h4 {
 button {
 	color: #FFFFFF;
 	font-size: 18px;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
 	height: 48px;
 	width: 20%;
 	background-color: #FF5A5F;
@@ -99,4 +125,8 @@ button {
 
 button:hover {
 	opacity: 90%;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> be533091ada1ea270d72f5479c785acad30cc928
